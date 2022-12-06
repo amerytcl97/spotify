@@ -7,7 +7,12 @@ type SliderProps = {
   onChange: (value: string) => any;
 };
 
-const SliderInput = styled.input``;
+const SliderInput = styled.input`
+  all: unset;
+  background-color: red;
+  height: 0.3rem;
+  border-radius: ${({ theme }) => theme.fullrounded};
+`;
 
 export default function Slider({ min, max, className, onChange }: SliderProps) {
   return (

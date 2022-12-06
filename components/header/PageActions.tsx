@@ -2,9 +2,7 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import SearchInput from "../pages/search/SearchInput";
 
-const PageActionsContainer = styled.div`
-  width: 100%;
-`;
+const PageActionsContainer = styled.div``;
 
 export default function PageActions() {
   const { pathname } = useRouter();
@@ -18,5 +16,5 @@ export default function PageActions() {
     }
   };
 
-  return <PageActionsContainer>{showPageComponent()}</PageActionsContainer>;
+  return <>{showPageComponent()}</>;
 }

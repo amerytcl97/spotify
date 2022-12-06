@@ -1,8 +1,5 @@
 import { PageRoute } from "../interfaces/PageRoute";
 import { Home, Search, Library } from "@styled-icons/ionicons-sharp";
-import styled from "styled-components";
-
-const SearchIcon = styled(Search)``;
 
 const PAGE_ROUTES: PageRoute[] = [
   {

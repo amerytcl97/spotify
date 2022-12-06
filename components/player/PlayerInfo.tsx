@@ -1,11 +1,7 @@
-import { Heart } from "@styled-icons/ionicons-sharp";
 import Image from "next/image";
 import Link from "next/link";
 import styled from "styled-components";
 import FavouriteButton from "../buttons/FavouriteButton";
-// import FavouriteButton from "../buttons/FavouriteButton";
-import TooltipButton from "../buttons/TooltipButton";
-import Tooltip from "../Tooltip";
 
 type PlayerInfoProps = {
   title: string;

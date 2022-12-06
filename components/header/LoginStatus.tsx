@@ -1,5 +1,6 @@
-import Link from "next/link";
+import { signIn } from "next-auth/react";
 import styled from "styled-components";
+import useLogin from "../../hooks/useLogin";
 import Button from "../buttons/Button";
 import LinkButton from "../buttons/LinkButton";
 
@@ -13,7 +14,7 @@ const SignUpButton = styled(LinkButton)`
   font-weight: bold;
 `;
 
-const LoginButton = styled(LinkButton)`
+const LoginButton = styled(Button)`
   border-radius: ${({ theme }) => theme.fullrounded};
   background-color: white;
   color: black;
@@ -30,7 +31,9 @@ export default function LoginStatus() {
   return (
     <LoginStatusContainer>
       <SignUpButton href="">Sign up</SignUpButton>
-      <LoginButton href="">Log in</LoginButton>
+      <LoginButton onClick={() => signIn("spotify", { callbackUrl: "/" })}>
+        Log in
+      </LoginButton>
     </LoginStatusContainer>
   );
 }

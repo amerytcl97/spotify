@@ -20,14 +20,18 @@ const LayoutSidebar = styled(Sidebar)`
 `;
 
 const LayoutContent = styled.div`
-  display: grid;
-  grid-template-rows: ${(props) => props.theme["--header-height"]} 100%;
+  /* display: grid;
+   grid-template-rows: ${(props) => props.theme["--header-height"]} 100%; */
   margin-left: ${(props) => props.theme["--sidebar-width"]};
   margin-bottom: ${(props) => props.theme["--footer-height"]};
 `;
 
 const LayoutMain = styled.main`
   /* background-color: blue; */
+  background-color: #0e1111;
+  min-height: 100vh;
+  padding-top: ${({ theme }) => theme["--header-height"]};
+  padding-inline: 2rem;
 `;
 
 export default function Layout({ children }: LayoutProps) {

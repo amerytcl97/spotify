@@ -4,16 +4,22 @@ import { useState } from "react";
 import styled from "styled-components";
 import Button from "../../buttons/Button";
 
-const SearchInputContainer = styled.div``;
+const SearchInputContainer = styled.div`
+  width: 100%;
+`;
 
 const SearchButton = styled(Button)`
-  height: 1.5rem;
-  width: 1.5rem;
+  & > svg {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
 `;
 
 const ClearButton = styled(Button)`
-  height: 2rem;
-  width: 2rem;
+  & > svg {
+    height: 2rem;
+    width: 2rem;
+  }
 `;
 
 const Input = styled.input`

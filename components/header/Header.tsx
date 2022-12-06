@@ -1,42 +1,57 @@
 import styled, { css } from "styled-components";
-import Button from "../buttons/Button";
 import { ChevronBack, ChevronForward } from "@styled-icons/ionicons-sharp";
-import SpotifyLogo from "../../icons/SpotifyLogo";
-import Tooltip from "../Tooltip";
 import TooltipButton from "../buttons/TooltipButton";
-import HeaderNotLogin from "./PageActions";
 import LoginStatus from "./LoginStatus";
 import PageActions from "./PageActions";
+import { useContext } from "react";
+import useLogin from "../../hooks/useLogin";
+import Profile from "./profile/Profile";
 
 type HeaderProps = {
   className?: string;
 };
 
 const HeaderContainer = styled.header`
-  position: sticky;
+  position: fixed;
   top: 0;
-  display: flex;
-  flex-direction: row;
-  place-items: center;
-  padding-inline: 1.5rem;
-  backdrop-filter: blur(4px);
-  justify-content: space-between;
+  z-index: 9999;
+  display: inline-flex;
+  align-items: center;
   gap: 1rem;
-  /* background-color: #e0e0e0; */
+  width: calc(100% - ${({ theme }) => theme["--sidebar-width"]});
+  backdrop-filter: blur(4px);
+  padding-inline: 1.2rem;
+  height: ${({ theme }) => theme["--header-height"]};
 `;
 
 const BackwardButton = styled(TooltipButton)`
-  ${({ theme }) => theme["--typical-icon-button"]}
+  & > svg {
+    ${({ theme }) => theme["--typical-icon-button"]}
+  }
 `;
 
 const ForwardButton = styled(TooltipButton)`
-  ${({ theme }) => theme["--typical-icon-button"]}
+  & > svg {
+    ${({ theme }) => theme["--typical-icon-button"]}
+  }
 `;
 
 const ArrowButtonsWrapper = styled.div`
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 1.5rem;
+`;
+
+const PageActionsWrapper = styled.div`
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 1;
+`;
+
+const ProfileWrapper = styled.div`
+  display: inline-flex;
+  align-items: center;
 `;
 
 export default function Header({ className }: HeaderProps) {
@@ -50,8 +65,15 @@ export default function Header({ className }: HeaderProps) {
           <ChevronForward />
         </ForwardButton>
       </ArrowButtonsWrapper>
-      <PageActions />
-      <LoginStatus />
+      <PageActionsWrapper>
+        <PageActions />
+      </PageActionsWrapper>
+      <ProfileWrapper>
+        <Profile />
+      </ProfileWrapper>
+      {/* <Profile /> */}
+      {/*
+       */}
     </HeaderContainer>
   );
 }

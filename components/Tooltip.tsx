@@ -25,7 +25,7 @@ const TooltipChildren = styled.div<{
   display: flex;
 
   :hover {
-    ${({ placement, content = "top" }) =>
+    ${({ placement, content }) =>
       placement === "top"
         ? css`
             ::before {

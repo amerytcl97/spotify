@@ -13,19 +13,19 @@ const FavouriteButtonContainer = styled(TooltipButton)`
   padding: 0.5rem;
 `;
 
-const FavouriteButtonIcon = styled(Heart)<{ favourite: boolean }>`
+const FavouriteButtonIcon = styled(Heart)<{ $favourite: boolean }>`
   width: 1.3rem;
   height: 1.3rem;
   color: white;
   fill: transparent;
 
-  ${({ favourite }) =>
-    favourite
+  ${({ $favourite }) =>
+    $favourite
       ? css`
           fill: green;
           color: transparent;
         `
-      : ""}
+      : undefined}
 `;
 
 export default function FavouriteButton({
@@ -45,7 +45,7 @@ export default function FavouriteButton({
       title={title}
       className={className}
     >
-      <FavouriteButtonIcon favourite={isFavourite} />
+      <FavouriteButtonIcon $favourite={isFavourite} />
     </FavouriteButtonContainer>
   );
 }

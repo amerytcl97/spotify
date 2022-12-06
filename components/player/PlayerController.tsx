@@ -1,44 +1,59 @@
 import {
   Infinite,
+  PauseCircle,
   PlayCircle,
   PlaySkipBack,
   PlaySkipForward,
   Shuffle,
 } from "@styled-icons/ionicons-sharp";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
+import {
+  LOCAL_STORAGE_USER_REPEAT,
+  LOCAL_STORAGE_USER_SHUFFLE,
+} from "../../utils/variables";
 import TooltipButton from "../buttons/TooltipButton";
 import Slider from "../Slider";
 
 const TypicalIconButtonStyle = css`
   height: 1.5rem;
   width: 1.5rem;
+  color: white;
 `;
 
 const PlayButton = styled(TooltipButton)`
-  height: 2.5rem;
-  width: 2.5rem;
   transition: all 0.2s;
-
+  & > svg {
+    height: 2.5rem;
+    width: 2.5rem;
+  }
   :hover {
     transform: scale(1.1);
   }
 `;
 
 const SkipForwardButton = styled(TooltipButton)`
-  ${TypicalIconButtonStyle}
+  & > svg {
+    ${TypicalIconButtonStyle}
+  }
 `;
 
 const SkipBackwardButton = styled(TooltipButton)`
-  ${TypicalIconButtonStyle}
+  & > svg {
+    ${TypicalIconButtonStyle}
+  }
 `;
 
 const ShuffleButton = styled(TooltipButton)`
-  ${TypicalIconButtonStyle}
+  & > svg {
+    ${TypicalIconButtonStyle}
+  }
 `;
 
 const LoopButton = styled(TooltipButton)`
-  ${TypicalIconButtonStyle}
+  & > svg {
+    ${TypicalIconButtonStyle}
+  }
 `;
 
 const PlayerControllerContainer = styled.div`
@@ -65,26 +80,60 @@ const SeekBar = styled(Slider)`
 `;
 
 export default function PlayerController() {
-  const [play, setPlay] = useState<boolean>(false);
-  const [loop, setLoop] = useState<boolean>(false);
-  const [shuffle, setShuffle] = useState<boolean>(false);
+  const [isPlay, setIsPlay] = useState<boolean>(false);
+  const [isRepeat, setIsRepeat] = useState<boolean>(false);
+  const [isShuffle, setIsShuffle] = useState<boolean>(false);
+
+  const repeat = () => {
+    localStorage.setItem(LOCAL_STORAGE_USER_REPEAT, "true");
+    setIsRepeat(true);
+  };
+
+  const shuffle = () => {
+    isShuffle
+      ? localStorage.setItem(LOCAL_STORAGE_USER_SHUFFLE, "false")
+      : localStorage.setItem(LOCAL_STORAGE_USER_SHUFFLE, "true");
+    setIsShuffle((o) => !o);
+  };
+
+  const play = () => {
+    setIsPlay((o) => !o);
+  };
+
+  useEffect(() => {
+    const getUserLocalStorage = () => {
+      const isUserRepeat =
+        localStorage.getItem(LOCAL_STORAGE_USER_REPEAT) ?? "false";
+      const isUserShuffle =
+        localStorage.getItem(LOCAL_STORAGE_USER_SHUFFLE) ?? "false";
+      setIsRepeat(JSON.parse(isUserRepeat.toLowerCase()));
+      setIsShuffle(JSON.parse(isUserShuffle.toLowerCase()));
+    };
+    getUserLocalStorage();
+  }, []);
 
   return (
     <PlayerControllerContainer>
       <ActionButtonsWrapper>
-        <ShuffleButton title="Shuffle" onClick={() => {}}>
+        <ShuffleButton
+          title={isShuffle ? "Disable Shuffle" : "Enable Shuffle"}
+          onClick={() => shuffle()}
+        >
           <Shuffle />
         </ShuffleButton>
         <SkipBackwardButton title="Previous" onClick={() => {}}>
           <PlaySkipBack />
         </SkipBackwardButton>
-        <PlayButton title="Play" onClick={() => {}}>
-          <PlayCircle />
+        <PlayButton title={isPlay ? "Pause" : "Play"} onClick={() => play()}>
+          {isPlay ? <PauseCircle /> : <PlayCircle />}
         </PlayButton>
         <SkipForwardButton title="Next" onClick={() => {}}>
           <PlaySkipForward />
         </SkipForwardButton>
-        <LoopButton title="Loop" onClick={() => {}}>
+        <LoopButton
+          title={isRepeat ? "Disable Repeat" : "Enable Repeat"}
+          onClick={() => repeat()}
+        >
           <Infinite />
         </LoopButton>
       </ActionButtonsWrapper>
