@@ -3,7 +3,7 @@ import Player from "../player/Player";
 
 const FooterPlayer = styled(Player)``;
 
-const FooterContainer = styled.footer`
+const Container = styled.footer`
   position: fixed;
   display: flex;
   align-items: center;
@@ -11,15 +11,14 @@ const FooterContainer = styled.footer`
   width: 100%;
   padding-inline: 1rem;
   min-height: ${(props) => props.theme["--footer-height"]};
-  background-color: #2a2a2a;
-  border: 1px solid #727272;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0);
+  backdrop-filter: blur(0.2rem);
+  background-color: #1c1917;
 `;
 
 export default function Footer() {
   return (
-    <FooterContainer>
+    <Container>
       <Player />
-    </FooterContainer>
+    </Container>
   );
 }

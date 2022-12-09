@@ -16,7 +16,7 @@ const getNewReleases = async (session: Session): Promise<NewRelease | {}> => {
             responseType: "json",
             params: {
                 country: "JP",
-                limit: "5",
+                limit: "15",
             }
         })
         if (res.status === 200) {

@@ -1,24 +1,18 @@
 import NextAuth, { NextAuthOptions } from "next-auth"
 import SpotifyProvider from "next-auth/providers/spotify"
-import { redirect } from "next/dist/server/api-utils";
 import { generateRandomString } from "../../../utils/functions";
-import { refreshAccessToken } from "../../../utils/login";
-
-const SCOPE =
-    "user-read-recently-played user-read-playback-state user-top-read user-modify-playback-state user-read-currently-playing user-follow-read playlist-read-private user-read-email user-read-private user-library-read playlist-read-collaborative";
-
-const RESPONSE_TYPE = "token";
+import { CLIENT_ID, CLIENT_SECRET, refreshAccessToken, SCOPE } from "../../../utils/login";
 
 
 export const authOptions: NextAuthOptions = {
     // Configure one or more authentication providers  
     providers: [
         SpotifyProvider({
-            clientId: process.env.NEXT_PUBLIC_CLIENT_ID!,
-            clientSecret: process.env.NEXT_PUBLIC_CLIENT_SECRET!,
+            clientId: CLIENT_ID,
+            clientSecret: CLIENT_SECRET,
             authorization: {
                 params: {
-                    // response_type: RESPONSE_TYPE,
+                    response_type: "code",
                     // client_id: process.env.NEXT_PUBLIC_CLIENT_ID!,
                     scope: SCOPE,
                     // redirect_uri: process.env.NEXT_PUBLIC_REDIRECT_URL!,
@@ -29,26 +23,24 @@ export const authOptions: NextAuthOptions = {
         // ...add more providers here  
     ],
     secret: process.env.NEXTAUTH_SECRET!,
-    session: {
-        strategy: "jwt",
-        maxAge: 3600,
-    },
+    // session: {
+    //     strategy: "jwt",
+    // },
     pages: {
         signIn: "/login",
     },
     callbacks: {
-        async jwt({ token, account, user, profile }) {
-            if (account && user) {
+        async jwt({ token, account, user }) {
+            console.log("Check JWT TOKEN", token);
+            if (account) {
                 return {
                     ...token,
                     accessToken: account.access_token,
-                    accessTokenExpires: Date.now() + (account.expires_at as number ?? 0) * 1000,
+                    accessTokenExpires: (account.expires_at as number ?? 0) * 1000,
                     refreshToken: account.refresh_token,
                     user,
                 }
             }
-
-
             if (Date.now() < token.accessTokenExpires!) {
                 console.log("Token has not expired", token.accessTokenExpires)
                 return token;
@@ -59,12 +51,10 @@ export const authOptions: NextAuthOptions = {
 
         },
         async session({ session, token }) {
-            session.user = {
-                name: token.user!.name,
-                email: token.user!.email,
-            };
+            console.log("Checking before session token", session);
+            session.accessTokenExpires = token.accessTokenExpires as number;
             session.accessToken = token.accessToken as string;
-            console.log('Checking session token', token);
+            console.log('Checking session token', session);
 
             return session;
         }

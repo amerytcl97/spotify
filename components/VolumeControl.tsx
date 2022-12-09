@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Button from "./buttons/Button";
+import Button from "./Buttons/Button";
 import Slider from "./Slider";
 import {
   VolumeOff,

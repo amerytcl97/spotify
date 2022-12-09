@@ -6,8 +6,10 @@ type HeadingProps = {
   text: string;
 };
 
-const H3 = styled.h2``;
+const H3 = styled.h2`
+  margin: 0;
+`;
 
-export default function Heading({ className, text }: HeadingProps) {
+export default function Title({ className, text }: HeadingProps) {
   return <H3 className={className}>{text}</H3>;
 }

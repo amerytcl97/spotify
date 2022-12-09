@@ -2,7 +2,7 @@ import { XCircle } from "@styled-icons/feather";
 import { Search } from "@styled-icons/ionicons-sharp";
 import { useState } from "react";
 import styled from "styled-components";
-import Button from "../../buttons/Button";
+import Button from "../../Buttons/Button";
 
 const SearchInputContainer = styled.div`
   width: 100%;

@@ -8,7 +8,7 @@ type LayoutProps = {
   children: ReactElement | ReactNode;
 };
 
-const LayoutContainer = styled.div`
+const Container = styled.div`
   min-height: 100vh;
 `;
 
@@ -19,7 +19,7 @@ const LayoutSidebar = styled(Sidebar)`
   width: ${(props) => props.theme["--sidebar-width"]};
 `;
 
-const LayoutContent = styled.div`
+const Content = styled.div`
   /* display: grid;
    grid-template-rows: ${(props) => props.theme["--header-height"]} 100%; */
   margin-left: ${(props) => props.theme["--sidebar-width"]};
@@ -28,21 +28,22 @@ const LayoutContent = styled.div`
 
 const LayoutMain = styled.main`
   /* background-color: blue; */
-  background-color: #0e1111;
+  background-color: black;
   min-height: 100vh;
-  padding-top: ${({ theme }) => theme["--header-height"]};
+  /* padding-top: calc(${({ theme }) => theme["--header-height"]} + 1rem); */
+  padding-block: 2rem;
   padding-inline: 2rem;
 `;
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <LayoutContainer>
+    <Container>
       <LayoutSidebar />
-      <LayoutContent>
-        <Header />
+      <Content>
+        {/* <Header /> */}
         <LayoutMain>{children}</LayoutMain>
-      </LayoutContent>
+      </Content>
       <Footer />
-    </LayoutContainer>
+    </Container>
   );
 }

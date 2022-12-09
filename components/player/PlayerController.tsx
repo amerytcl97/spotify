@@ -12,7 +12,7 @@ import {
   LOCAL_STORAGE_USER_REPEAT,
   LOCAL_STORAGE_USER_SHUFFLE,
 } from "../../utils/variables";
-import TooltipButton from "../buttons/TooltipButton";
+import TooltipButton from "../Buttons/TooltipButton";
 import Slider from "../Slider";
 
 const TypicalIconButtonStyle = css`

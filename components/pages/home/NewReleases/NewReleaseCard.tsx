@@ -1,50 +1,107 @@
-import Image from "next/image";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import styled from "styled-components";
 import { PlaylistImage } from "../../../../interfaces/spotify";
+import OpenSpotifyButton from "../../../Buttons/OpenSpotifyButton";
 
 type NewReleaseCardProps = {
   name: string;
   images: PlaylistImage[];
+  tracks: number;
+  releaseDate: string;
 };
 
 const Card = styled.div`
   display: flex;
   flex-direction: column;
-  position: relative;
   border-radius: 0.5rem;
   transition: all 0.3s;
-  height: 18rem;
-  width: 16rem;
+  height: 19.5rem;
+  width: 15rem;
+  background-color: #0e1111;
+  padding: 0.3rem;
+
   :hover {
     cursor: pointer;
-    transform: translateY(-0.5rem);
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
-      0 4px 6px -4px rgb(0 0 0 / 0.1);
-    /* margin-inline: 1rem; */
   }
 `;
 
 const ImageWrapper = styled.figure`
-  height: inherit;
-  width: inherit;
-  border-radius: inherit;
+  position: relative;
+  border-radius: 0.5rem;
+  margin: 0;
+  height: 100%;
+  width: 100%;
 `;
 
 const DisplayImage = styled(Image)`
-  border-radius: inherit;
+  border-radius: 0.5rem;
+  object-fit: fill;
+  object-position: center;
 `;
 
 const Name = styled.h3`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  font-size: 1.1rem;
-  margin-left: 0.5rem;
-  word-wrap: break-word;
+  font-size: 1rem;
+  flex: 1;
+  margin-block: 0.5rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;
 
-export default function NewReleaseCard({ name, images }: NewReleaseCardProps) {
+const NumberOfTracks = styled.span`
+  color: #d6d3d1;
+  font-weight: bold;
+  font-size: 0.8rem;
+  width: fit-content;
+  border-radius: ${({ theme }) => theme.fullrounded};
+`;
+
+const SpotifyButton = styled(OpenSpotifyButton)`
+  width: 100%;
+`;
+
+const Content = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  padding-inline: 0.2rem;
+  margin-top: 0.5rem;
+`;
+
+const PlaylistInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+`;
+
+const PlaylistSubInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`;
+
+const ReleaseDate = styled.span`
+  border-radius: ${({ theme }) => theme.fullrounded};
+  color: #d6d3d1;
+  font-weight: bold;
+  font-size: 0.8rem;
+  padding-block: 0.5rem;
+  padding-inline: 1rem;
+  font-size: 0.7rem;
+  margin: 0;
+  padding: 0;
+`;
+
+export default function NewReleaseCard({
+  name,
+  images,
+  tracks,
+  releaseDate,
+}: NewReleaseCardProps) {
   const [displayImage, setDisplayImage] = useState<PlaylistImage>();
 
   useEffect(() => {
@@ -59,6 +116,7 @@ export default function NewReleaseCard({ name, images }: NewReleaseCardProps) {
 
   return (
     <Card>
+      {/* <SpotifyButton href="" title="Open Spotify" placement="bottom" /> */}
       <ImageWrapper>
         <DisplayImage
           src={displayImage?.url!}
@@ -68,7 +126,18 @@ export default function NewReleaseCard({ name, images }: NewReleaseCardProps) {
           fill
         />
       </ImageWrapper>
-      <Name>{name}</Name>
+      <Content>
+        <SpotifyButton href="" title="Open Spotify" placement="top" />
+        <PlaylistInfo>
+          <PlaylistSubInfo>
+            <NumberOfTracks>
+              {tracks} {tracks > 1 ? "Tracks" : "Track"}
+            </NumberOfTracks>
+            <ReleaseDate>{releaseDate}</ReleaseDate>
+          </PlaylistSubInfo>
+          <Name>{name}</Name>
+        </PlaylistInfo>
+      </Content>
     </Card>
   );
 }

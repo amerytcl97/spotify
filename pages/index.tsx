@@ -1,6 +1,5 @@
 import { GetServerSidePropsContext } from "next";
-import { Session } from "next-auth";
-import { getSession, useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import { ReactElement, useEffect, useState } from "react";
 import styled from "styled-components";
 import NewReleases from "../components/pages/home/NewReleases/NewReleases";
@@ -18,9 +17,7 @@ const HomeContainer = styled.div`
 `;
 
 export default function Home<NextPageWithLayout>({ newReleases }: HomeProps) {
-  useEffect(() => {
-    console.log(newReleases);
-  }, [newReleases]);
+  useEffect(() => {}, [newReleases]);
 
   return (
     <HomeContainer>
@@ -41,13 +38,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     };
   }
 
-  // const {
-  //   albums: { items: newReleases },
-  // } = (await getNewReleases(session!)) as NewRelease;
-
   const newReleases = ((await getNewReleases(session!)) as NewRelease) || {};
-
-  console.log("Check server side albums", newReleases);
 
   return {
     props: {

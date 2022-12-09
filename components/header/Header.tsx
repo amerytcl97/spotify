@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { ChevronBack, ChevronForward } from "@styled-icons/ionicons-sharp";
-import TooltipButton from "../buttons/TooltipButton";
+import TooltipButton from "../Buttons/TooltipButton";
 import LoginStatus from "./LoginStatus";
 import PageActions from "./PageActions";
 import { useContext } from "react";

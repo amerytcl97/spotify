@@ -2,17 +2,21 @@ import Link from "next/link";
 import { ReactElement, ReactNode } from "react";
 import styled from "styled-components";
 
-type LinkButtonProps = {
+export type LinkButtonProps = {
   className?: string;
   href: string;
   children: ReactElement | ReactNode;
 };
 
-const LinkButtonContainer = styled(Link)`
+const Button = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
   white-space: nowrap;
+
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 export default function LinkButton({
@@ -21,8 +25,8 @@ export default function LinkButton({
   children,
 }: LinkButtonProps) {
   return (
-    <LinkButtonContainer href={href} className={className}>
+    <Button href={href} className={className}>
       {children}
-    </LinkButtonContainer>
+    </Button>
   );
 }

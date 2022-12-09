@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
 import Presentation from "../../icons/Presentation";
 import Queue from "../../icons/Queue";
-import Button from "../buttons/Button";
-import TooltipButton from "../buttons/TooltipButton";
+import Button from "../Buttons/Button";
+import TooltipButton from "../Buttons/TooltipButton";
 import Tooltip from "../Tooltip";
 import VolumeControl from "../VolumeControl";
 

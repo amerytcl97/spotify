@@ -23,14 +23,13 @@ const TooltipChildren = styled.div<{
   height: fit-content;
   width: fit-content;
   display: flex;
-
   :hover {
     ${({ placement, content }) =>
       placement === "top"
         ? css`
             ::before {
               content: "${content.toString()}";
-              z-index: 10;
+              z-index: 9999;
               white-space: nowrap;
               display: block;
               position: absolute;
@@ -51,7 +50,7 @@ const TooltipChildren = styled.div<{
         : css`
             ::after {
               content: "${content.toString()}";
-              z-index: 10;
+              z-index: 9999;
               white-space: nowrap;
               display: block;
               position: absolute;

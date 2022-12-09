@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import styled from "styled-components";
 import { PageRoute } from "../../../interfaces/PageRoute";
-import Button from "../../buttons/Button";
+import Button from "../../Buttons/Button";
 import Dropdown from "../../Dropdown";
 import ProfileItem from "./ProfileItem";
 
@@ -26,7 +26,7 @@ const ProfileDropDownButton = styled(Button)`
   padding-block: 0.5rem;
   padding-inline: 0.8rem;
   border-radius: ${({ theme }) => theme.fullrounded};
-  background-color: #262626;
+  background-color: #1c1917;
   display: inline-flex;
   align-items: center;
   gap: 0.8rem;

@@ -17,6 +17,7 @@ const DropdownContainer = styled.div`
 const DropDownMenu = styled.div`
   position: absolute;
   right: 0;
+  left: 0;
   width: 100%;
   background-color: black;
   margin-top: 1rem;

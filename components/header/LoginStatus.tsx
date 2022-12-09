@@ -1,8 +1,8 @@
 import { signIn } from "next-auth/react";
 import styled from "styled-components";
 import useLogin from "../../hooks/useLogin";
-import Button from "../buttons/Button";
-import LinkButton from "../buttons/LinkButton";
+import Button from "../Buttons/Button";
+import LinkButton from "../Buttons/LinkButton";
 
 const LoginStatusContainer = styled.div`
   display: inline-flex;

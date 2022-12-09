@@ -3,7 +3,7 @@ import { Provider } from "next-auth/providers";
 import { getProviders, signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import Button from "../components/buttons/Button";
+import Button from "../components/Buttons/Button";
 
 type LoginProps = {
   providers: Provider;

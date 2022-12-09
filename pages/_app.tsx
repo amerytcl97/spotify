@@ -26,6 +26,7 @@ export default function App({
       height: 1.3rem;
       width: 1.3rem;
     `,
+    "--main-theme": "#1DB954",
     fullrounded: "9999px",
   };
 
