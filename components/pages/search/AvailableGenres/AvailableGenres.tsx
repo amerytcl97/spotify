@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { generateRandomGradient } from "../../../../utils/functions";
 import Title from "../../../Title";
 import AvailableGenresCard from "./AvailableGenresCard";
 
@@ -15,19 +16,24 @@ const List = styled.ul`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  gap : 1rem;
 `;
 
-export default function AvailableGenres({ data = [] }: AvailableGenresProps) {
-  console.log("Checking available genres", data);
+const ListItem = styled.li`
+  background-color : ${generateRandomGradient()};
+
+`
+
+export default function AvailableGenres({ data : availableGenres = [] }: AvailableGenresProps) {
 
   return (
     <Container>
-      <Title text="Genres" />
+      <Title text="Available Genres" />
       <List>
-        {data.map((item, index) => (
-          <li key={index}>
-            <AvailableGenresCard title={item} />
-          </li>
+        {availableGenres.map((availableGenre, index) => (
+          <ListItem key={index}>
+            <AvailableGenresCard title={availableGenre} />
+          </ListItem>
         ))}
       </List>
     </Container>
