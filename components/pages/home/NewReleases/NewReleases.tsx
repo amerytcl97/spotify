@@ -42,8 +42,6 @@ const SectionHeader = styled.header`
 `;
 
 export default function NewReleases({ data: newReleases }: NewReleasesProps) {
-  console.log("Check newReleases", newReleases);
-
   return (
     <Container>
       <SectionHeader>

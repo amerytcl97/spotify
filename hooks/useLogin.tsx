@@ -59,10 +59,8 @@ const useLogin = ({
       setError(query.error as string);
       setLoggedIn(false);
       localStorage.removeItem(SPOTIFY_AUTH_STATE);
-      console.log("Login failed custom hook fired");
     }
     const access_token = window.location.hash.substring(1);
-    console.log("Check token", access_token);
   }, [redirect, router]);
 
   return { loggedIn, error, login, logout };

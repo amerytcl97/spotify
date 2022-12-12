@@ -1,23 +1,29 @@
 import { GetServerSidePropsContext } from "next";
 import { getSession } from "next-auth/react";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect } from "react";
 import styled from "styled-components";
 import NewReleases from "../components/pages/home/NewReleases/NewReleases";
 import { NewRelease } from "../interfaces/spotify";
 import Layout from "../layouts/Layout";
 import { authenticateSession } from "../utils/login";
-import { getNewReleases } from "./api/spotify";
+import { getFeaturedPlaylists, getNewReleases } from "./api/spotify";
 
 type HomeProps = {
   newReleases: NewRelease;
+  featuredPlaylists: any;
 };
 
 const HomeContainer = styled.div`
   min-height: 100vh;
 `;
 
-export default function Home<NextPageWithLayout>({ newReleases }: HomeProps) {
-  useEffect(() => {}, [newReleases]);
+export default function Home<NextPageWithLayout>({
+  newReleases,
+  featuredPlaylists,
+}: HomeProps) {
+  useEffect(() => {}, [newReleases, featuredPlaylists]);
+
+  console.log("Check featured playlists", featuredPlaylists);
 
   return (
     <HomeContainer>
@@ -38,11 +44,17 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     };
   }
 
-  const newReleases = ((await getNewReleases(session!)) as NewRelease) || {};
+  const [newReleases, featuredPlaylists] = await Promise.all([
+    getNewReleases(session!),
+    getFeaturedPlaylists(session!),
+  ]);
+
+  // const newReleases = ((await getNewReleases(session!)) as NewRelease) || {};
 
   return {
     props: {
       newReleases,
+      featuredPlaylists,
     },
   };
 }

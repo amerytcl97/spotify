@@ -31,8 +31,8 @@ const LayoutMain = styled.main`
   background-color: black;
   min-height: 100vh;
   /* padding-top: calc(${({ theme }) => theme["--header-height"]} + 1rem); */
-  padding-block: 2rem;
-  padding-inline: 2rem;
+  /* padding-block: 2rem; */
+  padding-left: 2rem;
 `;
 
 export default function Layout({ children }: LayoutProps) {
@@ -40,7 +40,7 @@ export default function Layout({ children }: LayoutProps) {
     <Container>
       <LayoutSidebar />
       <Content>
-        {/* <Header /> */}
+        {/* <Header />; */}
         <LayoutMain>{children}</LayoutMain>
       </Content>
       <Footer />

@@ -24,8 +24,7 @@ const VolumeButton = styled(Button)`
   & > * {
     height: 1.2rem;
     width: 1.2rem;
-  }
-`;
+  } `;
 
 const VolumeSlider = styled(Slider)``;
 
@@ -65,9 +64,9 @@ export default function VolumeControl() {
   };
 
   const handleOnClick = () => {
-    console.log("OnClick");
     setMuted((o) => !o);
   };
+
 
   return (
     <VolumeControlContainer>

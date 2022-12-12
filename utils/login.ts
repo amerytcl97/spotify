@@ -12,37 +12,12 @@ const SCOPE =
 const TOKEN_URL = `${BASE_AUTH_URL}/api/token`;
 
 const authenticateSession = (session: Session | null) => {
-    console.log("authenticating session check", session);
     if (!session || Date.now() > session.accessTokenExpires) {
-        console.log("Not authenticated");
         return false;
     }
     return true;
 }
 
-// const requestTokens = async (token: JWT) => {
-//     try {
-//         const config: AxiosRequestConfig = {
-//             url: TOKEN_URL,
-//             method: "GET",
-//             headers: {
-//                 "Accept-Encoding": "application/json",
-//                 'Authorization':
-//                     `Basic ${Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString("base64")}`,
-//             },
-//             data: qs.stringify({
-//                 grant_type: "authorization_code",
-//                 code: token.accessToken,
-//                 redirect_uri: "http://localhost:3000/api/auth/callback/spotify",
-//             })
-//         }
-//         const res = await axios(config)
-//         console.log("requestTokens", res);
-//         return res.data;
-//     } catch (error: any) {
-//         console.error(error.response);
-//     }
-// }
 
 const refreshAccessToken = async (currentToken: JWT) => {
     const { refreshToken } = currentToken;

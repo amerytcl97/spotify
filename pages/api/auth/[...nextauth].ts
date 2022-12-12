@@ -42,7 +42,6 @@ export const authOptions: NextAuthOptions = {
                 }
             }
             if (Date.now() < token.accessTokenExpires!) {
-                console.log("Token has not expired", token.accessTokenExpires)
                 return token;
             }
             console.log('token has expired');
@@ -51,7 +50,6 @@ export const authOptions: NextAuthOptions = {
 
         },
         async session({ session, token }) {
-            console.log("Checking before session token", session);
             session.accessTokenExpires = token.accessTokenExpires as number;
             session.accessToken = token.accessToken as string;
             console.log('Checking session token', session);

@@ -82,15 +82,9 @@ export default function Profile() {
 
   const [show, setShow] = useState<boolean>(false);
 
-  // const handleOnShow = useCallback(() => {
-  //   setShow(!show);?
-  // }, [show]);
-
   const handleOnShow = () => {
     setShow((o) => !o);
   };
-
-  console.log("Check profile", data);
 
   return (
     <ProfileDropDown

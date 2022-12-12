@@ -8,11 +8,13 @@ type ShowMoreButton = {
 };
 
 const Button = styled(LinkButton)`
-  border: 0.15rem solid white;
+  border: 0.13rem solid #cbd5e1;
   padding-block: 0.6rem;
   padding-inline: 1rem;
   margin: 0;
   border-radius: ${({ theme }) => theme.fullrounded};
+  font-size: 0.8rem;
+  color: #cbd5e1;
 `;
 
 export default function ShowMoreButton({ href, className }: ShowMoreButton) {

@@ -3,7 +3,7 @@ import { ChevronBack, ChevronForward } from "@styled-icons/ionicons-sharp";
 import TooltipButton from "../Buttons/TooltipButton";
 import LoginStatus from "./LoginStatus";
 import PageActions from "./PageActions";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import useLogin from "../../hooks/useLogin";
 import Profile from "./profile/Profile";
 
@@ -57,7 +57,7 @@ const ProfileWrapper = styled.div`
 export default function Header({ className }: HeaderProps) {
   return (
     <HeaderContainer className={className}>
-      <ArrowButtonsWrapper className={className}>
+      {/* <ArrowButtonsWrapper className={className}>
         <BackwardButton title="Go back" placement="bottom" onClick={() => {}}>
           <ChevronBack />
         </BackwardButton>
@@ -70,7 +70,7 @@ export default function Header({ className }: HeaderProps) {
       </PageActionsWrapper>
       <ProfileWrapper>
         <Profile />
-      </ProfileWrapper>
+      </ProfileWrapper> */}
       {/* <Profile /> */}
       {/*
        */}
