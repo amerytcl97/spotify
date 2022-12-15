@@ -1,7 +1,7 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Layout from "../layouts/Layout";
-import { css, ThemeProvider } from "styled-components";
+import { css, keyframes, ThemeProvider } from "styled-components";
 import { SessionProvider } from "next-auth/react";
 import { ReactElement, ReactNode } from "react";
 import { NextPage } from "next";
@@ -28,6 +28,32 @@ export default function App({
     `,
     "--main-theme": "#1DB954",
     fullrounded: "9999px",
+    "animation-fadein-slidedown": keyframes`
+      0% {
+        transform: translateY(-1rem);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0rem);
+        opacity: 1;
+      }
+    `,
+    "animation-fadeout": keyframes`
+      0% {
+        opacity: 1;
+      }
+      100% {
+        opacity : 0;
+      }
+    `,
+    "animation-fadein": keyframes`
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity : 1;
+        }
+      `,
   };
 
   const getLayout = Component.getLayout ?? ((page) => page);

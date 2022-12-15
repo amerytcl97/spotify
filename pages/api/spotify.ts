@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosRequestConfig, HeadersDefaults } from "axios";
 import { Session } from "next-auth";
 import { NewRelease } from "../../interfaces/spotify";
 import { generateRandomString } from "../../utils/functions";
@@ -8,6 +8,13 @@ const API_VERSION: string = "v1";
 
 const AVAILABLE_GENRES_ENDP = "recommendations/available-genre-seeds";
 
+
+const typicalHeaders = (accessToken: string): { "Authorization": string, "Accept-Encoding": string } => {
+    return {
+        "Authorization": `Bearer ${accessToken}`,
+        "Accept-Encoding": "application/json",
+    }
+}
 
 
 const getNewReleases = async (session: Session): Promise<NewRelease | {}> => {
@@ -63,7 +70,7 @@ const getFeaturedPlaylists = async (session: Session) => {
     }
 }
 
-const getAvailableGenres = async (session: Session) => {
+const getAvailableGenres = async (session: Session): Promise<SpotifyApi.AvailableGenreSeedsResponse | undefined> => {
     try {
         const config: AxiosRequestConfig = {
             url: `${API_URL}/${API_VERSION}/${AVAILABLE_GENRES_ENDP}`,
@@ -82,7 +89,6 @@ const getAvailableGenres = async (session: Session) => {
     } catch (error: any) {
         const { response: { data: { error: { status, message } } } } = error;
         console.error("Problem getting available genres", message);
-        return {};
     }
 }
 
@@ -112,6 +118,40 @@ const getTopArtists = async (session: Session) => {
         return {};
 
     }
+
 }
 
-export { getNewReleases, getTopArtists, getFeaturedPlaylists, getAvailableGenres }
+
+const getSearches = async (session: Session, query: string) => {
+    try {
+        const config: AxiosRequestConfig = {
+            url: `${API_URL}/${API_VERSION}/search`,
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${session.accessToken}`,
+                "Accept-Encoding": "application/json",
+            },
+            params: {
+                q: `remaster%20track:${query}artist:${query}`,
+                type: "track,artist",
+                market: "JP",
+                limit: 10,
+                offset: 0,
+            }
+        }
+
+        const res = await axios(config);
+        if (res.status === 200) {
+            console.log("Called");
+            return res.data;
+        }
+        throw res;
+    } catch (error: any) {
+        const { response: { data: { error: { status, message } } } } = error;
+        console.error("Problem getting top artists", message);
+        return null;
+
+    }
+}
+
+export { getNewReleases, getTopArtists, getFeaturedPlaylists, getAvailableGenres, getSearches }

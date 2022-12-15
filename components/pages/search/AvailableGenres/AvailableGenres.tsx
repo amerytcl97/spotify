@@ -1,10 +1,15 @@
+import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { generateRandomGradient } from "../../../../utils/functions";
+import {
+  generateRandomGradient,
+  generateRandomHexColors,
+} from "../../../../utils/functions";
 import Title from "../../../Title";
 import AvailableGenresCard from "./AvailableGenresCard";
 
 type AvailableGenresProps = {
-  data: string[];
+  data: SpotifyApi.AvailableGenreSeedsResponse["genres"];
 };
 
 const Container = styled.section``;
@@ -16,26 +21,33 @@ const List = styled.ul`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap : 1rem;
+  gap: 1rem;
+  padding-left: 0.5rem;
+  padding-bottom: 2rem;
 `;
 
 const ListItem = styled.li`
-  background-color : ${generateRandomGradient()};
+  height: fit-content;
+  width: fit-content;
+`;
 
-`
-
-export default function AvailableGenres({ data : availableGenres = [] }: AvailableGenresProps) {
-
+export default function AvailableGenres({
+  data: availableGenres = [],
+}: AvailableGenresProps) {
+  const [genres, setGenres] = useState<string[]>([]);
+  useEffect(() => {
+    setGenres(availableGenres);
+  }, [availableGenres]);
   return (
-    <Container>
+    <section>
       <Title text="Available Genres" />
       <List>
-        {availableGenres.map((availableGenre, index) => (
+        {genres.map((genre, index) => (
           <ListItem key={index}>
-            <AvailableGenresCard title={availableGenre} />
+            <AvailableGenresCard title={genre} />
           </ListItem>
         ))}
       </List>
-    </Container>
+    </section>
   );
 }
