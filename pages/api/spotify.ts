@@ -145,9 +145,10 @@ const getSearches = async (session: Session, query: string) => {
             console.log("Called");
             return res.data;
         }
-        throw res;
+        // throw res;
     } catch (error: any) {
-        const { response: { data: { error: { status, message } } } } = error;
+        console.log(error);
+        const { response: { data: { error: { status, message } } } } = error ?? {};
         console.error("Problem getting top artists", message);
         return null;
 

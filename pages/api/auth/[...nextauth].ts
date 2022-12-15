@@ -31,7 +31,7 @@ export const authOptions: NextAuthOptions = {
     },
     callbacks: {
         async jwt({ token, account, user }) {
-            console.log("Check JWT TOKEN", token);
+            // console.log("Check JWT TOKEN", token);
             if (account) {
                 return {
                     ...token,
@@ -52,7 +52,7 @@ export const authOptions: NextAuthOptions = {
         async session({ session, token }) {
             session.accessTokenExpires = token.accessTokenExpires as number;
             session.accessToken = token.accessToken as string;
-            console.log('Checking session token', session);
+            // console.log('Checking session token', session);
 
             return session;
         }
