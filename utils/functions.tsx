@@ -8,9 +8,9 @@ export const generateRandomString = (length: number): string => {
   }
 
   return randomString;
-}
+};
 
-export const generateRandomHexColors = () : string => {
+export const generateRandomHexColors = (): string => {
   let hexCode = "";
   const presetHex = "0123456789abcdef";
 
@@ -19,14 +19,20 @@ export const generateRandomHexColors = () : string => {
   }
 
   return `#${hexCode}`;
-}
+};
 
-export const generateRandomGradient = () : string => {
+export const generateRandomGradient = (): string => {
   const randomDegree = Math.floor(Math.random() * 360);
   const hexColorsFrom = generateRandomHexColors();
   const hexColorsTo = generateRandomHexColors();
 
-  const gradient = `linear-gradient(${randomDegree}deg, ${hexColorsFrom}, ${hexColorsTo})`
+  const gradient = `linear-gradient(${randomDegree}deg, ${hexColorsFrom}, ${hexColorsTo})`;
 
   return gradient;
-}
+};
+
+export const convertMsToMinSec = (ms: number): string => {
+  const minutes: number = Math.floor(ms / 60000);
+  const seconds: number = parseInt(((ms % 60000) / 1000).toFixed(0));
+  return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+};

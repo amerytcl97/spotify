@@ -6,10 +6,7 @@ type DefaultContentProps = {
   genres: SpotifyApi.AvailableGenreSeedsResponse["genres"];
 };
 
-const Content = styled.div`
-  margin-top: 1.5rem;
-  animation: ${({ theme }) => theme["animation-fadein"]} 0.5s ease-in;
-`;
+const Content = styled.div``;
 
 export default function DefaultContent({ genres }: DefaultContentProps) {
   return (

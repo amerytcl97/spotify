@@ -20,6 +20,9 @@ const Container = styled.div`
 
 const Content = styled.div`
   height: 100%;
+  margin-top: 1.5rem;
+  animation: ${({ theme }) => theme["animation-fadein"]} 0.3s ease-in;
+  padding-right: 1.5rem;
 `;
 
 export default function Search({ genres }: SearchProps) {

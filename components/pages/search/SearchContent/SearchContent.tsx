@@ -1,8 +1,10 @@
+import { Refresh, RefreshCircle } from "@styled-icons/ionicons-sharp";
 import { useSession } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { getSearches } from "../../../../pages/api/spotify";
-import SearchCard from "./SearchCard";
+import ArtistCard from "./ArtistCard";
+import TrackCard from "./TrackCard";
 
 type SearchContentProps = {
   query: string;
@@ -14,14 +16,6 @@ const Container = styled.div`
   animation: ${({ theme }) => theme["animation-fadein"]} 0.5s ease-in;
 `;
 
-// const EmptyContainer = styled.div`
-//   height: 100%;
-//   width: 100%;
-//   display: flex;
-//   place-content: center;
-//   background-color: blue;
-// `;
-
 const EmptyMessage = styled.p`
   display: block;
   font-size: 1.8rem;
@@ -30,8 +24,47 @@ const EmptyMessage = styled.p`
   margin-top: 10rem;
 `;
 
+const Wrapper = styled.div`
+  display: grid;
+  grid-template-columns: 60% 40%;
+`;
+
+const ArtistList = styled.ul`
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-top: 0;
+  padding-left: 0;
+`;
+
+const TrackList = styled.ul`
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding-top: 0;
+  padding-left: 0;
+`;
+
+const ListHeading = styled.h3`
+  margin-left: 0;
+`;
+
+const RefreshIcon = styled(Refresh)`
+  height: 3rem;
+  width: 3rem;
+  display: block;
+  text-align: center;
+  margin-top: 10rem;
+  animation: ${({ theme }) => theme["animation-spin"]} 1s linear infinite;
+`;
+
 export default function SearchContent({ query }: SearchContentProps) {
   const { data: session } = useSession();
+
+  const [isSearching, setIsSearching] = useState<boolean>(false);
 
   const [artists, setArtists] =
     useState<SpotifyApi.PagingObject<SpotifyApi.ArtistObjectFull>>();
@@ -42,19 +75,20 @@ export default function SearchContent({ query }: SearchContentProps) {
 
   useEffect(() => {
     if (query) {
+      setIsSearching(true);
       if (timerRef.current) {
         clearTimeout(timerRef.current);
       }
       timerRef.current = setTimeout(async () => {
         const { artists, tracks }: SpotifyApi.SearchResponse =
           await getSearches(session!, query);
-        console.log(artists, tracks);
         if (artists) {
           setArtists(artists);
         }
         if (tracks) {
           setTracks(tracks);
         }
+        setIsSearching(false);
       }, 1500);
     }
     () => {
@@ -65,9 +99,41 @@ export default function SearchContent({ query }: SearchContentProps) {
   return (
     <Container>
       {artists?.items.length || tracks?.items.length ? (
-        <SearchCard title="Beat it" artist="Michael Jackson" image="" />
-      ) : (
+        <Wrapper>
+          <div>
+            <ListHeading>Artists</ListHeading>
+            <ArtistList>
+              {artists?.items.map((artist) => (
+                <li key={artist.id}>
+                  <ArtistCard
+                    name={artist.name}
+                    type={artist.type}
+                    images={artist.images}
+                  />
+                </li>
+              ))}
+            </ArtistList>
+          </div>
+          <div>
+            <ListHeading>Songs</ListHeading>
+            <TrackList>
+              {tracks?.items.map((track) => (
+                <li key={track.id}>
+                  <TrackCard
+                    title={track.name}
+                    artist={track.artists[0].name}
+                    images={track.album.images}
+                    duration={track.duration_ms}
+                  />
+                </li>
+              ))}
+            </TrackList>
+          </div>
+        </Wrapper>
+      ) : !isSearching ? (
         <EmptyMessage>Could not find any results</EmptyMessage>
+      ) : (
+        <RefreshIcon />
       )}
     </Container>
   );

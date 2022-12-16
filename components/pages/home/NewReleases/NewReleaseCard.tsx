@@ -118,13 +118,7 @@ export default function NewReleaseCard({
     <Card>
       {/* <SpotifyButton href="" title="Open Spotify" placement="bottom" /> */}
       <ImageWrapper>
-        <DisplayImage
-          src={displayImage?.url!}
-          alt=""
-          // height={displayImage?.height}
-          // width={displayImage?.width}
-          fill
-        />
+        <DisplayImage src={displayImage?.url!} alt="" fill />
       </ImageWrapper>
       <Content>
         <SpotifyButton href="" title="Open Spotify" placement="top" />

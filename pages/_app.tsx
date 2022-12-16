@@ -54,6 +54,14 @@ export default function App({
           opacity : 1;
         }
       `,
+    "animation-spin": keyframes`
+      from {
+        transform : rotate(0deg)
+      }
+      to {
+        transform : rotate(360deg)
+      }
+    `,
   };
 
   const getLayout = Component.getLayout ?? ((page) => page);
