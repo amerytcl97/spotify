@@ -22,7 +22,7 @@ const profileRoutes: PageRoute[] = [
 const ProfileDropDownButton = styled(Button)`
   font-weight: 600;
   font-size: 0.9rem;
-  min-width: fit-content;
+  min-width: 100%;
   padding-block: 0.5rem;
   padding-inline: 0.8rem;
   border-radius: ${({ theme }) => theme.fullrounded};
@@ -71,10 +71,11 @@ const ProfileDropDown = styled(Dropdown)`
   &&& {
     background-color: #262626;
     width: 12rem;
-    /* width: 100%; */
-
-    /* margin-right: 1.5rem; */
   }
+`;
+
+const Username = styled.span`
+  flex: 1;
 `;
 
 export default function Profile() {
@@ -91,7 +92,7 @@ export default function Profile() {
       button={
         <ProfileDropDownButton onClick={() => handleOnShow()}>
           <UserIcon />
-          {data?.user?.name}
+          <Username>{data?.user?.name ?? "NaN"}</Username>
           <ChevronDownIcon />
         </ProfileDropDownButton>
       }

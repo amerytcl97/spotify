@@ -45,7 +45,7 @@ const refreshAccessToken = async (currentToken: JWT) => {
             refreshToken,
             user: currentToken.user,
         }
-        // console.log('Checking new token', newToken)
+        console.log('Checking new token', newToken)
         return newToken;
 
     } catch (error: any) {

@@ -25,7 +25,7 @@ const NavigationItemContainer = styled(Link)`
   place-items: center;
   gap: 1rem;
   width: 100%;
-  color: #cbd5e1;
+  color: lightslategray;
   transition: color 0.5s;
   :hover {
     color: white;

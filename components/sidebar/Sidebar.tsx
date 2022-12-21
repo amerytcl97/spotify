@@ -1,36 +1,49 @@
+import Image from "next/image";
 import styled from "styled-components";
-import SpotifyLogo from "../../icons/SpotifyLogo";
 import ArrowButtons from "../ArrowButtons";
 import Profile from "../header/profile/Profile";
 import Navigation from "../nav/Navigation";
+import UserPlayList from "./UserPlaylist/UserPlaylist";
 
 type SidebarProps = {
   className?: string;
 };
 
-const SidebarSpotifyLogo = styled(SpotifyLogo)`
-  height: 100%;
-  width: 100%;
+const LogoContainer = styled.div`
+  position: relative;
+  height: 3rem;
+  width: 3rem;
+`;
+
+const Logo = styled(Image)`
+  object-fit: contain;
 `;
 
 const Container = styled.aside`
-  padding: 0.8rem;
+  padding-block: 0.8rem;
   display: flex;
   flex-direction: column;
 `;
 
 const SectionHeader = styled.header`
-  padding: 0.5rem;
+  padding-block: 0.5rem;
+  padding-inline: 1.5rem;
   display: inline-flex;
   align-items: center;
-  gap: 1rem;
+  justify-content: space-between;
+  width: 100%;
 `;
 
 const Content = styled.div`
   display: flex;
+  flex-direction: column;
   flex: 1;
   padding-block: 2rem;
-  padding-inline: 0.5rem;
+  gap: 1.2rem;
+
+  & > * {
+    padding-inline: 1.5rem;
+  }
 `;
 
 const SectionFooter = styled.footer`
@@ -43,13 +56,18 @@ export default function Sidebar({ className }: SidebarProps) {
   return (
     <Container className={className}>
       <SectionHeader>
-        <Profile />
+        <LogoContainer>
+          <Logo src="/images/logo_rgb_green.png" alt="Logo" fill />
+        </LogoContainer>
         <ArrowButtons />
       </SectionHeader>
       <Content>
         <Navigation />
+        <UserPlayList />
       </Content>
-      <SectionFooter>A clone</SectionFooter>
+      <SectionFooter>
+        <Profile />
+      </SectionFooter>
     </Container>
   );
 }

@@ -132,9 +132,8 @@ export default function SearchContent({ query }: SearchContentProps) {
         </Wrapper>
       ) : !isSearching ? (
         <EmptyMessage>Could not find any results</EmptyMessage>
-      ) : (
-        <RefreshIcon />
-      )}
+      ) : // <RefreshIcon />
+      null}
     </Container>
   );
 }

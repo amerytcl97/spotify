@@ -145,7 +145,7 @@ const getSearches = async (session: Session, query: string) => {
             console.log("Called");
             return res.data;
         }
-        // throw res;
+        throw res;
     } catch (error: any) {
         console.log(error);
         const { response: { data: { error: { status, message } } } } = error ?? {};
@@ -155,4 +155,69 @@ const getSearches = async (session: Session, query: string) => {
     }
 }
 
-export { getNewReleases, getTopArtists, getFeaturedPlaylists, getAvailableGenres, getSearches }
+const getUserPlaylists = async (session: Session) => {
+    try {
+        const config: AxiosRequestConfig = {
+            url: `${API_URL}/${API_VERSION}/me/playlists`,
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${session.accessToken}`,
+                "Accept-Encoding": "application/json",
+            },
+            params: {
+                limit: 10,
+                offset: 0,
+            }
+        }
+
+        const res = await axios(config);
+        if (res.status === 200) {
+            return res.data;
+        }
+        throw res;
+    } catch (error: any) {
+        console.log(error);
+        const { response: { data: { error: { status, message } } } } = error ?? {};
+        console.error("Problem getting user playlists", message);
+        return null;
+    }
+}
+
+
+const getUserSavedTracks = async (session: Session) => {
+    try {
+        const config: AxiosRequestConfig = {
+            url: `${API_URL}/${API_VERSION}/me/tracks`,
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${session.accessToken}`,
+                "Accept-Encoding": "application/json",
+            },
+            params: {
+                limit: 10,
+                offset: 0,
+            }
+        };
+        const res = await axios(config);
+        if (res.status === 200) {
+            return res.data;
+        }
+        throw res;
+    } catch (error: any) {
+        console.log(error);
+        const { response: { data: { error: { status, message } } } } = error ?? {};
+        console.error("Problem getting user saved tracks", message);
+        return null;
+
+    }
+}
+
+export {
+    getNewReleases,
+    getTopArtists,
+    getFeaturedPlaylists,
+    getAvailableGenres,
+    getSearches,
+    getUserPlaylists,
+    getUserSavedTracks,
+}
