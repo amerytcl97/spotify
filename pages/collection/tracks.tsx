@@ -81,7 +81,10 @@ export default function Tracks({ userSavedTracks }: TracksProps) {
         </Wrapper>
       </PageHeader>
       <Content>
-        <TracksTable headers={["album", "date added", ""]} data={[]} />
+        <TracksTable
+          headers={["album", "date added", ""]}
+          data={userSavedTracks.items}
+        />
       </Content>
     </div>
   );
@@ -100,7 +103,6 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   }
 
   const userSavedTracks = await getUserSavedTracks(session!);
-  console.log("Check userSavedTracks", userSavedTracks);
 
   return {
     props: {
