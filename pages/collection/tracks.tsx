@@ -1,9 +1,10 @@
-import { Heart, Timer } from "@styled-icons/ionicons-sharp";
+import { Heart, PlayCircle, Timer } from "@styled-icons/ionicons-sharp";
 import { GetServerSidePropsContext } from "next";
 import { getSession, useSession } from "next-auth/react";
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import styled from "styled-components";
-import { TracksTable } from "../../components/TracksTable";
+import Button from "../../components/Buttons/Button";
+import TracksTable from "../../components/TracksTable";
 import Layout from "../../layouts/Layout";
 import { authenticateSession } from "../../utils/login";
 import { getUserSavedTracks } from "../api/spotify";
@@ -62,9 +63,36 @@ const Description = styled.span`
 
 const Content = styled.div``;
 
+const ContentHeader = styled.div`
+  
+`;
+
+const PlayButton = styled(Button)`
+    height : 3.5rem;
+    width : 3.5rem;
+`
+
+const PlayIcon = styled(PlayCircle)`
+  height : inherit;
+  width : inherit;
+`
+
+const SearchFilterWrapper = styled.div``;
+
 export default function Tracks({ userSavedTracks }: TracksProps) {
   const { data: session } = useSession();
-  console.log("Check userSavedTracks", userSavedTracks);
+
+  
+  useEffect(() => {
+    const formatRelevantDataForTable = () => {
+      const { items } = userSavedTracks;
+
+    }
+    if (userSavedTracks) {
+
+    }
+  }, [userSavedTracks])
+
   return (
     <div>
       <PageHeader>
@@ -81,10 +109,15 @@ export default function Tracks({ userSavedTracks }: TracksProps) {
         </Wrapper>
       </PageHeader>
       <Content>
-        <TracksTable
-          headers={["album", "date added", ""]}
-          data={userSavedTracks.items}
-        />
+        <ContentHeader>
+          <PlayButton onClick={() => {}}>
+            <PlayIcon />
+          </PlayButton>
+          <SearchFilterWrapper>
+            
+          </SearchFilterWrapper>
+        </ContentHeader>
+        <TracksTable data={[]} />
       </Content>
     </div>
   );
@@ -102,7 +135,8 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     };
   }
 
-  const userSavedTracks = await getUserSavedTracks(session!);
+  const userSavedTracks = await getUserSavedTracks(session!) || {};
+  console.log("Check userSavedTracks", userSavedTracks);
 
   return {
     props: {
