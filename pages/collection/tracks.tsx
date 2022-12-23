@@ -1,11 +1,12 @@
 import { Heart, PlayCircle, Timer } from "@styled-icons/ionicons-sharp";
 import { GetServerSidePropsContext } from "next";
 import { getSession, useSession } from "next-auth/react";
-import { ReactElement, useEffect } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import styled from "styled-components";
 import Button from "../../components/Buttons/Button";
 import TracksTable from "../../components/TracksTable";
 import Layout from "../../layouts/Layout";
+import { convertMsToMinSec } from "../../utils/functions";
 import { authenticateSession } from "../../utils/login";
 import { getUserSavedTracks } from "../api/spotify";
 
@@ -63,35 +64,49 @@ const Description = styled.span`
 
 const Content = styled.div``;
 
-const ContentHeader = styled.div`
-  
-`;
+const ContentHeader = styled.div``;
 
 const PlayButton = styled(Button)`
-    height : 3.5rem;
-    width : 3.5rem;
-`
+  height: 3.5rem;
+  width: 3.5rem;
+`;
 
 const PlayIcon = styled(PlayCircle)`
-  height : inherit;
-  width : inherit;
-`
+  height: inherit;
+  width: inherit;
+`;
 
 const SearchFilterWrapper = styled.div``;
 
 export default function Tracks({ userSavedTracks }: TracksProps) {
   const { data: session } = useSession();
 
-  
+  const [savedTracks, setSavedTracks] = useState<
+    {
+      name: string;
+      artist: string;
+      albumName: string;
+      duration: string;
+    }[]
+  >([]);
+
   useEffect(() => {
     const formatRelevantDataForTable = () => {
       const { items } = userSavedTracks;
-
-    }
+      const newItems = items.map((item) => {
+        return {
+          name: item.track.name,
+          artist: item.track.artists[0].name,
+          albumName: item.track.album.name,
+          duration: convertMsToMinSec(item.track.duration_ms),
+        };
+      });
+      setSavedTracks(newItems);
+    };
     if (userSavedTracks) {
-
+      formatRelevantDataForTable();
     }
-  }, [userSavedTracks])
+  }, [userSavedTracks]);
 
   return (
     <div>
@@ -113,11 +128,9 @@ export default function Tracks({ userSavedTracks }: TracksProps) {
           <PlayButton onClick={() => {}}>
             <PlayIcon />
           </PlayButton>
-          <SearchFilterWrapper>
-            
-          </SearchFilterWrapper>
+          <SearchFilterWrapper></SearchFilterWrapper>
         </ContentHeader>
-        <TracksTable data={[]} />
+        <TracksTable data={savedTracks} />
       </Content>
     </div>
   );
@@ -135,7 +148,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     };
   }
 
-  const userSavedTracks = await getUserSavedTracks(session!) || {};
+  const userSavedTracks = (await getUserSavedTracks(session!)) || {};
   console.log("Check userSavedTracks", userSavedTracks);
 
   return {

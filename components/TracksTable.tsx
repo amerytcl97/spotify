@@ -1,12 +1,22 @@
-import styled from "styled-components"
+import { ReactElement, ReactNode } from "react";
+import styled from "styled-components";
 
-const Container = styled.div``
+type TrackListProps = {
+  header: ReactElement | ReactNode;
+  body: ReactElement | ReactNode;
+};
 
-export default function TracksTable() {
+const List = styled.div``;
+
+const ListHeader = styled.div``;
+
+const ListContent = styled.ul``;
+
+export default function TrackList({ header, body }: TrackListProps) {
   return (
-    <Container>
-      <div></div>
-    </Container>
-  )
-
+    <List>
+      <ListHeader>{header}</ListHeader>
+      <ListContent>{body}</ListContent>
+    </List>
+  );
 }
